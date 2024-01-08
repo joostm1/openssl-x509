@@ -2,15 +2,23 @@
 $ConnectionName = "XYZ9"
 $ServerAddress = "egx.xyz9.net"
 
-Get-VpnConnection -Name $ConnectionName
-
-
-Remove-VpnConnection  -Name $ConnectionName
+$Connection = Get-VpnConnection -Name $ConnectionName
+if ($Connection.Name) {
+    $Connection = Remove-VpnConnection  -Name $ConnectionName
+    if ($Connection) {
+        Write-Host Could not remove $ConnectionName
+        Exit
+    }
+}
 
 Add-VpnConnection -Name $ConnectionName `
  -ServerAddress $ServerAddress `
- -TunnelType "Ikev2" `
- -AuthenticationMethod
+ -TunnelType 'Ikev2' `
+ -AuthenticationMethod MachineCertificate `
+ -EncryptionLevel Maximum `
+ -DnsSuffix xyz9.net `
+ 
+ 
 
 Set-VpnConnectionIPsecConfiguration -ConnectionName $ConnectionName `
  -AuthenticationTransformConstants SHA256128 `
@@ -18,4 +26,4 @@ Set-VpnConnectionIPsecConfiguration -ConnectionName $ConnectionName `
  -EncryptionMethod AES256 `
  -IntegrityCheckMethod SHA256 `
  -DHGroup Group2 `
- -PfsGroup None
+ -PfsGroup PFS2048 

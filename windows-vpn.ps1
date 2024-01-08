@@ -2,7 +2,7 @@
 $ConnectionName = "XYZ9"
 $ServerAddress = "egx.xyz9.net"
 
-Get-VpnConnection -ConnectionName
+Get-VpnConnection
 
 
 Remove-VpnConnection  -Name $ConnectionName

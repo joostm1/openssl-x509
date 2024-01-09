@@ -37,14 +37,14 @@ subjectKeyIdentifier	= hash
 [ user_ext ]
 basicConstraints		= CA:false
 keyUsage				= digitalSignature
-extendedKeyUsage		= clientAuth, msSmartcardLogin
+extendedKeyUsage		= serverAuth, clientAuth, msSmartcardLogin, ipsecIKE
 subjectAltName			= otherName:1.3.6.1.4.1.311.20.2.3;UTF8:${ENV::UPN}
 subjectKeyIdentifier	= hash
 
 [ server_ext ]
 basicConstraints		= CA:false
 keyUsage				= digitalSignature
-extendedKeyUsage		= serverAuth, 1.3.6.1.5.5.8.2.2
+extendedKeyUsage		= serverAuth, clientAuth, ipsecIKE
 subjectAltName			= DNS:${ENV::SERVER}
 subjectKeyIdentifier	= hash
 

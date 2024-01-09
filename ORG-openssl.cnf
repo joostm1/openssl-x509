@@ -1,8 +1,8 @@
-config_diagnostics	= 1
-default_bits		= 2048
-default_md			= sha1
-UTF8				= yes
-prompt				= no
+config_diagnostics		= 1
+default_bits			= 2048
+default_md				= sha1
+UTF8					= yes
+prompt					= no
 
 [ req_ca ]
 distinguished_name		= dn_ca
@@ -27,7 +27,7 @@ CN  = ${ENV::SERVER}
 
 [ dn_ca ]
 O   = ${ENV::ORG}
-CN = ${ENV::ORG} root CA
+CN	= ${ENV::ORG} root CA
 
 [ ca_ext ]
 basicConstraints		= critical,CA:true

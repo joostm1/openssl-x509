@@ -1,7 +1,7 @@
 # Makefile
 
 # run this as 
-#		make ORG="XYZ9" UPN=joost@xyz9.net SERVER=egx.xyz9.net
+#		make ORG='"XYZ9"' UPN=joost@xyz9.net SERVER=egx.xyz9.net
 
 # openssl output formats
 FORMPEM		:= PEM
@@ -26,18 +26,16 @@ CACER		:= $(CERTS)/cacer.$(FORM)
 
 # files for the server certificate
 SCER		:= $(CERTS)/$(SERVER)-cer.$(FORM)
-SCSR		:= $(CERTS)/$(SERVER)-csr.$(FORM)
 SKEY		:= $(KEYS)/$(SERVER)-key.$(FORM)
 
 # files for the user certificate
 UCER		:= $(CERTS)/$(UPN)-cer.$(FORM)
-UCSR		:= $(CERTS)/$(UPN)-csr.$(FORM)
 UKEY		:= $(KEYS)/$(UPN)-key.$(FORM)
 UPFX		:= $(CERTS)/$(UPN).$(FORMPFX)
 
 all:	$(UPFX) $(SCER) $(UCER)
 
-# Create a PFX bundle with the user certificate and the user key.
+# Create a PFX bundle with the user certificate, the user key and the CA
 $(UPFX): $(UCER)
 	openssl pkcs12 -export -inkey $(UKEY) -in $(UCER) \
 		-certfile $(CACER) -name "$(UPN)" -out $(UPFX) 
@@ -45,9 +43,9 @@ $(UPFX): $(UCER)
 # Create and sign a user certificate
 $(UCER): $(CACER)
 	openssl req -x509 -nodes -new -config $(CONF) \
-	       	-section $(CONF_SECT_US) -days 1825 \
+	    -section $(CONF_SECT_US) -days 1825 \
 		-outform $(FORM) -keyout $(UKEY) -out $(UCER) \
-		-CA $(CACER) -CAkey $(CAKEY) 
+		-CA $(CACER) -CAkey $(CAKEY)
 	openssl x509 -in $(UCER) -noout -text
 
 # Create and sign a server certificate
@@ -55,9 +53,10 @@ $(SCER): $(CACER)
 	openssl req -x509 -nodes -new -config $(CONF) \
 		-section $(CONF_SECT_SR) -days 3650 \
 		-outform $(FORM) -keyout $(SKEY) -out $(SCER) \
-		-CA $(CACER) -CAkey $(CAKEY) 
+		-CA $(CACER) -CAkey $(CAKEY)
 	openssl x509 -in $(SCER) -noout -text
 
+# Create a self-signed CA certificate
 $(CACER): $(CONF)
 	openssl req -x509 -nodes -new -config $(CONF) \
 		-section $(CONF_SECT_CA) -days 3650 \
@@ -72,8 +71,8 @@ $(ORG):
 
 clean:
 	rm $(CAKEY) $(CACER) \
-	       	$(UCER) $(UCSR) $(UKEY) $(UPFX) \
+	       	$(UCER) $(UKEY) $(UPFX) \
 		$(CONF) \
-	       	$(SCER) $(SCSR) $(SKEY)
+	       	$(SCER) $(SKEY)
 	rmdir $(CERTS) $(KEYS)
 	rmdir $(ORG)

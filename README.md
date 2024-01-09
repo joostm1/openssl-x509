@@ -1,55 +1,30 @@
-# Tools and tutorial for Certifcate Based Authentication (CBA) in Entra ID
-## using [openssl](https://www.openssl.org/) and a [Yubikey 5](https://www.yubico.com/products/yubikey-5-overview/).
+# Makefile for creating self-signed x509 certificates 
+## using openssl
 
 
-One of the authentication methods in Enrea ID is [Certificate-based authentication](https://learn.microsoft.com/en-us/azure/active-directory/authentication/concept-certificate-based-authentication).
-This is attractive as it combines a good passwordless user experience with good security.
+## With this, you get:
+1. A self-signed Certification Authority (CA) certificate.
+2. A user certificate with a (UPN) in the Subject Alternative Name, suitable for smartcard login.
+3. A server certificate with the host name in the Subject Alternative Name, suitable for VPN 
+   configurations.
 
-This repo contains some tools and tutorial for enabling CBA in Azure AD using openssl and a yubikey 5.
-It is divided in 3 parts:
+## Here's how:
 
-1. Creating the certificates using openssl.
-2. Enable CBA in Entra ID.
-3. Using a Yubikey as a smartcard.
+	git clone git@github.com:joostm1/openssl-x509.git
+	cd openssl-x509
+	make ORG='"XYZ9 Inc."' UPN=joost@xyz9.net SERVER=egx.xyz9.net
 
+Where:
 
-# 1. Creating the certificates with openssl
+*ORG		is the name of your organisation.*
+*UPN		is your User Principal Name*
+*SERVER	is the DNS name of your VPN server*
 
-
-**In Entra ID, users authenticate with a certificate that:**
-
-- provides the user's identity, i.e., the user principal name.
-
-- is signed by _a certain_ certificate authority (CA).
-
-**Entra ID verifies the user's identity by:**
-
-- verifying that the requesting user certificate is signed by _a certain_ CA.
-
-- the ability to map the requesting user certificate to a user.
-
-
-The goal of this `aad-cba` repo is to get you started wiyth CBA.
-
-____
-**Let's create this _certain_ CA as well as the user certificate.**
-
-Clone this `aad-cba` thing to your local workspace:
-
-	git clone git@github.com:joostm1/aad-cba.git
-
-Create both the CA and the user certificate:
-
-	make ORG=YOURORG UPN=yourname@yourdomain.com
-
-Provide your *organisation name* and *your UPN* on this commandline. 
-____
 ### Here's a run in my world with explanation:
 
-My organization name is XYZ9 and my UPN is joost@xyz9.net, so I do:
+My organization name is XYZ9 Inc. == and my UPN is joost@xyz9.net, so I do:
 
-	cd aad-cba
-	make ORG=XYZ9 UPN=joost@xyz9.net
+	make ORG='"XYZ9 Inc."' UPN=joost@xyz9.net SERVER=egx.xyz9.net
 
 ### Certificate Authority
 

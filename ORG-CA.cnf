@@ -5,7 +5,7 @@ default_bits            = 2048
 distinguished_name      = cadn
 x509_extensions         = ca_ext
 req_extensions          = ca_ext
-default_md              = sha1
+default_md              = sha256
 prompt                  = no
 UTF8                    = yes
 

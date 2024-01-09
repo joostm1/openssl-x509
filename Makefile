@@ -36,7 +36,7 @@ all:	$(UPFX) $(SCER) $(UCER)
 # Create a PFX bundle with the user certificate and the user key.
 $(UPFX): $(UCER)
 	openssl pkcs12 -export -inkey $(UKEY) -in $(UCER) \
-		-name "$(UPN)" -out $(UPFX) 
+		-certfile $(CACER) -name "$(UPN)" -out $(UPFX) 
 
 # Sign the user certificate
 $(UCER): $(UCSR) $(CACER)

@@ -12,9 +12,9 @@ FORMPFX		:= PFX
 FORM		:= $(FORMPEM)
 
 # openssl config files for CA, server and user certificates
-CONFCA		:= '$(ORG)/$(ORG)-CA.cnf'
-CONFCS		:= '$(ORG)/$(ORG)-CS.cnf'
-CONFCU		:= '$(ORG)/$(ORG)-CU.cnf'
+CONFCA		:= $(ORG)/CA.cnf
+CONFCS		:= $(ORG)/CS.cnf
+CONFCU		:= $(ORG)/CU.cnf
 
 # files for the CA
 CAKEY		:= $(ORG)/private/cakey.$(FORM)
@@ -35,8 +35,13 @@ all:	$(UPFX) $(SCER) $(UCER)
 
 # Create a PFX bundle with the user certificate and the user key.
 $(UPFX): $(UCER)
+<<<<<<< HEAD
 	openssl pkcs12 -export -inkey $(UKEY) -in $(UCER) \
+		-certfile $(CACER) -name "$(UPN)" -out $(UPFX) 
+=======
+	openssl pkcs12 -export -inkey $(UKEY) -in $(UCER) -certfile $(CACER) \
 		-name "$(UPN)" -out $(UPFX) 
+>>>>>>> f53ecc3544f3bcba0f0de1dddd885a9eba3feb10
 
 # Sign the user certificate
 $(UCER): $(UCSR) $(CACER)
@@ -49,7 +54,7 @@ $(UCSR): $(UKEY)
 		-key $(UKEY) -out $(UCSR)
 
 # Create a user key
-$(UKEY): $(ORG) 
+$(UKEY): $(CONFCU)
 	openssl genpkey -config $(CONFCU) -out $(UKEY) -outform $(FORM) \
 		-algorithm RSA
 
@@ -65,7 +70,7 @@ $(SCSR): $(SKEY)
 		-key $(SKEY) -out $(SCSR)
 
 # Create a server key
-$(SKEY): $(CACER)
+$(SKEY): $(CACER) $(CONFCS)
 	openssl genpkey -config $(CONFCS) -out $(SKEY) -outform $(FORM) \
 		-algorithm RSA
 
@@ -76,17 +81,22 @@ $(CACER): $(CAKEY)
 	openssl x509 -in $(CACER) -noout -text
 
 # Create a key for the CA certificate
-$(CAKEY): $(ORG)
+$(CAKEY): $(CONFCA)
 	openssl genpkey -config $(CONFCA) -out $(CAKEY) -outform $(FORM) \
 		-algorithm RSA
 
+$(CONFCA):	ORG-CA.cnf $(ORG)
+	cp ORG-CA.cnf $(CONFCA)
+
+$(CONFCS):	ORG-CS.cnf $(ORG)
+	cp ORG-CS.cnf $(CONFCS)
+
+$(CONFCU):	ORG-CU.cnf $(ORG)
+	cp ORG-CU.cnf $(CONFCU)
+
 $(ORG):
 	mkdir -p $(ORG) $(ORG)/certs $(ORG)/private
-	chmod 700 $(ORG)/private
-	cp ORG-CA.cnf $(CONFCA)
-	cp ORG-CS.cnf $(CONFCS)
-	cp ORG-CU.cnf $(CONFCU)
-	
+
 clean:
 	rm $(CAKEY) $(CACER) \
 	       	$(UCER) $(UCSR) $(UKEY) $(UPFX) \
@@ -94,4 +104,3 @@ clean:
 	       	$(SCER) $(SCSR) $(SKEY)
 	rmdir $(ORG)/certs $(ORG)/private
 	rmdir $(ORG)
-	

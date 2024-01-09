@@ -4,7 +4,7 @@ config_diagnostics = 1
 default_bits        = 2048
 distinguished_name  = dn
 req_extensions      = cr_ext
-default_md          = sha1
+default_md          = sha256
 UTF8                = yes
 prompt              = no
 

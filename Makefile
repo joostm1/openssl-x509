@@ -60,7 +60,7 @@ $(SCER): $(CACER)
 $(CACER): $(CONF)
 	openssl req -x509 -nodes -new -config $(CONF) \
 		-section $(CONF_SECT_CA) -days 3650 \
-		-outform $(FORM) -keyout $(CAKEY) -out $(CACER) 
+		-outform $(FORMDER) -keyout $(CAKEY) -out $(CACER) 
 	openssl x509 -in $(CACER) -noout -text
 
 $(CONF):	ORG-openssl.cnf $(ORG)

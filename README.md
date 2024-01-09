@@ -3,6 +3,7 @@
 
 
 ## With this, you get:
+
 1. A self-signed Certification Authority (CA) certificate.
 2. A user certificate with a (UPN) in the Subject Alternative Name, suitable for smartcard login.
 3. A server certificate with the host name in the Subject Alternative Name, suitable for VPN 
@@ -14,17 +15,14 @@
 	cd openssl-x509
 	make ORG='"XYZ9 Inc."' UPN=joost@xyz9.net SERVER=egx.xyz9.net
 
-Where:
-
-**ORG		is the name of your organisation.**
-
-**UPN		is your User Principal Name**
-
-**SERVER	is the DNS name of your VPN server**
+## Where:
+	ORG		is the name of your organisation.
+	UPN		is your User Principal Name.
+	SERVER		is the DNS name of your VPN server
 
 ### Here's a run in my world with explanation:
 
-My organization name is XYZ9 Inc.,  and my UPN is joost@xyz9.net and I have a router named egx.xyz9.net, so I do:
+My organization name is XYZ9 Inc., and my UPN is joost@xyz9.net and my router is egx.xyz9.net, so I do:
 
 	make ORG='"XYZ9 Inc."' UPN=joost@xyz9.net SERVER=egx.xyz9.net
 

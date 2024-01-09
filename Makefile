@@ -22,7 +22,7 @@ CERTS		:= $(ORG)/certs
 
 # files for the CA
 CAKEY		:= $(KEYS)/cakey.$(FORM)
-CACER		:= $(CERTS)/cacer.$(FORM)
+CACER		:= $(CERTS)/cacer.$(FORMDER)
 
 # files for the server certificate
 SCER		:= $(CERTS)/$(SERVER)-cer.$(FORM)
@@ -43,7 +43,7 @@ $(UPFX): $(UCER)
 # Create and sign a user certificate
 $(UCER): $(CACER)
 	openssl req -x509 -nodes -new -config $(CONF) \
-	    -section $(CONF_SECT_US) -days 1825 \
+		-section $(CONF_SECT_US) -days 1825 \
 		-outform $(FORM) -keyout $(UKEY) -out $(UCER) \
 		-CA $(CACER) -CAkey $(CAKEY)
 	openssl x509 -in $(UCER) -noout -text

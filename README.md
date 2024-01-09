@@ -16,13 +16,15 @@
 
 Where:
 
-*ORG		is the name of your organisation.*
-*UPN		is your User Principal Name*
-*SERVER	is the DNS name of your VPN server*
+**ORG		is the name of your organisation.**
+
+**UPN		is your User Principal Name**
+
+**SERVER	is the DNS name of your VPN server**
 
 ### Here's a run in my world with explanation:
 
-My organization name is XYZ9 Inc. == and my UPN is joost@xyz9.net, so I do:
+My organization name is XYZ9 Inc.,  and my UPN is joost@xyz9.net and I have a router named egx.xyz9.net, so I do:
 
 	make ORG='"XYZ9 Inc."' UPN=joost@xyz9.net SERVER=egx.xyz9.net
 

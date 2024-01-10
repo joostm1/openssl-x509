@@ -17,17 +17,13 @@ distinguished_name		= dn_server
 x509_extensions			= server_ext
 
 [ dn_user ]
-O   = ${ENV::ORG}
-CN  = ${ENV::UPN}
-emailAddress = ${ENV::UPN}
+CN   = ${ENV::ORG}
 
 [ dn_server ]
-O   = ${ENV::ORG}
-CN  = ${ENV::SERVER}
+CN   = ${ENV::ORG}
 
 [ dn_ca ]
-O   = ${ENV::ORG}
-CN	= ${ENV::ORG} root CA
+CN   = ${ENV::ORG}
 
 [ ca_ext ]
 basicConstraints		= critical,CA:true

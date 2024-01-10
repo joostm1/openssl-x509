@@ -22,7 +22,8 @@ CERTS		:= $(ORG)/certs
 
 # files for the CA
 CAKEY		:= $(KEYS)/cakey.$(FORM)
-CACER		:= $(CERTS)/cacer.$(FORMDER)
+CACER		:= $(CERTS)/cacer.$(FORM)
+CACERDER	:= $(CERTS)/cacer.$(FORMDER)
 
 # files for the server certificate
 SCER		:= $(CERTS)/$(SERVER)-cer.$(FORM)
@@ -60,7 +61,9 @@ $(SCER): $(CACER)
 $(CACER): $(CONF)
 	openssl req -x509 -nodes -new -config $(CONF) \
 		-section $(CONF_SECT_CA) -days 3650 \
-		-outform $(FORMDER) -keyout $(CAKEY) -out $(CACER) 
+		-outform $(FORM) -keyout $(CAKEY) -out $(CACER) 
+	# Convert a copy in DER format
+	openssl x509 -in $(CACER) -inform $(FORM) -out $(CACERDER) -outform $(FORMDER)
 	openssl x509 -in $(CACER) -noout -text
 
 $(CONF):	ORG-openssl.cnf $(ORG)
@@ -70,7 +73,7 @@ $(ORG):
 	mkdir -p $(KEYS) $(CERTS)
 
 clean:
-	rm $(CAKEY) $(CACER) \
+	rm $(CAKEY) $(CACER) $(CACERDER) \
 	       	$(UCER) $(UKEY) $(UPFX) \
 		$(CONF) \
 	       	$(SCER) $(SKEY)

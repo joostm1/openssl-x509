@@ -1,7 +1,7 @@
 # Makefile
 
 # run this as 
-#		make ORG='"XYZ9"' UPN=joost@xyz9.net SERVER=egx.xyz9.net
+#		make ORG="XYZ9 Inc." UPN=joost@xyz9.net SERVER=egx.xyz9.net
 
 # openssl output formats
 FORMPEM		:= PEM
@@ -12,13 +12,14 @@ FORMPFX		:= PFX
 FORM		:= $(FORMPEM)
 
 # openssl config file with sections for CA, server and user certificates
-CONF		:= $(ORG)/$(ORG)-openssl.cnf
+DIR			:="$(ORG)"
+CONF		:= $(DIR)/openssl.cnf
 CONF_SECT_CA	:= "req_ca"
 CONF_SECT_US	:= "req_user"
 CONF_SECT_SR	:= "req_server"
 
-KEYS		:= $(ORG)/private
-CERTS		:= $(ORG)/certs
+KEYS		:= $(DIR)/private
+CERTS		:= $(DIR)/certs
 
 # files for the CA
 CAKEY		:= $(KEYS)/cakey.$(FORM)
@@ -66,10 +67,10 @@ $(CACER): $(CONF)
 	openssl x509 -in $(CACER) -inform $(FORM) -out $(CACERDER) -outform $(FORMDER)
 	openssl x509 -in $(CACER) -noout -text
 
-$(CONF):	ORG-openssl.cnf $(ORG)
+$(CONF):	ORG-openssl.cnf $(DIR)
 	cp ORG-openssl.cnf $(CONF)
 
-$(ORG):
+$(DIR):
 	mkdir -p $(KEYS) $(CERTS)
 
 clean:
@@ -78,4 +79,4 @@ clean:
 		$(CONF) \
 	       	$(SCER) $(SKEY)
 	rmdir $(CERTS) $(KEYS)
-	rmdir $(ORG)
+	rmdir $(DIR)

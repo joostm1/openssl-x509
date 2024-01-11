@@ -17,34 +17,34 @@ distinguished_name		= dn_server
 x509_extensions			= server_ext
 
 [ dn_user ]
-O	= ${ENV::ORG}
+O   = ${ENV::ORG}
 CN	= ${ENV::UPN}
 
 [ dn_server ]
-O	= ${ENV::ORG}
+O   = ${ENV::ORG}
 CN	= ${ENV::SERVER}
 
 [ dn_ca ]
-O	= ${ENV::ORG}
+O   = ${ENV::ORG}
 CN	= ${ENV::ORG} Root CA
 
 [ ca_ext ]
 basicConstraints		= critical,CA:true
-keyUsage			= critical,keyCertSign,cRLSign
-subjectKeyIdentifier		= hash
+keyUsage			    = critical, cRLSign, digitalSignature, keyCertSign
+subjectKeyIdentifier	= hash
 
 [ user_ext ]
 basicConstraints		= CA:false
-keyUsage			= digitalSignature
-extendedKeyUsage		= clientAuth, msSmartcardLogin
+keyUsage			    = critical, nonRepudiation, digitalSignature, keyEncipherment, keyAgreement
+extendedKeyUsage		= critical, clientAuth, msSmartcardLogin
 subjectAltName			= otherName:1.3.6.1.4.1.311.20.2.3;UTF8:${ENV::UPN}
-subjectKeyIdentifier		= hash
+subjectKeyIdentifier	= hash
 
 [ server_ext ]
 basicConstraints		= CA:false
-keyUsage			= digitalSignature
-extendedKeyUsage		= serverAuth, 1.3.6.1.5.5.8.2.2
+keyUsage			    = critical, nonRepudiation, digitalSignature, keyEncipherment, keyAgreement
+extendedKeyUsage		= critical, serverAuth, 1.3.6.1.5.5.8.2.2
 subjectAltName			= DNS:${ENV::SERVER}
-subjectKeyIdentifier		= hash
+subjectKeyIdentifier	= hash
 
 

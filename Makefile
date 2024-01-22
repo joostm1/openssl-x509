@@ -1,7 +1,7 @@
 # Makefile
 
 # run this as 
-#		make ORG="XYZ9 Inc." UPN=joost@xyz9.net SERVER=egx.xyz9.net
+#		make ORG='"XYZ9 Inc."' UPN=joost@xyz9.net SERVER=egx.xyz9.net
 
 # openssl output formats
 FORMPEM		:= PEM

@@ -2,7 +2,7 @@
 ## using openssl
 
 
-## With this, you get:
+## With this [Makefile](Makefile), you get:
 
 1. A self-signed Certification Authority (CA) certificate.
 2. A user certificate with a (UPN) in the Subject Alternative Name, suitable for smartcard login.
@@ -106,7 +106,7 @@ The ${ENV::SERVER} construction takes value of the SERVER environment variable, 
 
 ### User certificate
 
-	The below section from the [configuration file](ORG-openssl.cnf) specifies the x509 extensions to be used in the certificate. 
+The below section from the [configuration file](ORG-openssl.cnf) specifies the x509 extensions to be used in the certificate. 
 
 	[ user_ext ]
 	basicConstraints = CA:false
@@ -117,9 +117,7 @@ The ${ENV::SERVER} construction takes value of the SERVER environment variable, 
 
 Note how subjectAltName is populated via otherName with a [User Pricipal Name](https://oidref.com/1.3.6.1.4.1.311.20.2.3).
 
-
 See [RFC 3280](https://www.ietf.org/rfc/rfc3280.txt) for the encoding of the subjectAltName.
-
 See [this](https://learn.microsoft.com/en-us/troubleshoot/windows-server/windows-security/enabling-smart-card-logon-third-party-certification-authorities) dated document for certificate requirements.
 
 

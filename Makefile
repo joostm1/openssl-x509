@@ -44,7 +44,7 @@ $(UPFX): $(UCER)
 
 # Create and sign a user certificate
 $(UCER): $(CACER)
-	openssl req -x509 -nodes -new -config $(CONF) \
+	openssl req -x509 -noenc -new -config $(CONF) \
 		-section $(CONF_SECT_US) -days 1825 \
 		-outform $(FORM) -keyout $(UKEY) -out $(UCER) \
 		-CA $(CACER) -CAkey $(CAKEY)
@@ -52,7 +52,7 @@ $(UCER): $(CACER)
 
 # Create and sign a server certificate
 $(SCER): $(CACER)
-	openssl req -x509 -nodes -new -config $(CONF) \
+	openssl req -x509 -noenc -new -config $(CONF) \
 		-section $(CONF_SECT_SR) -days 3650 \
 		-outform $(FORM) -keyout $(SKEY) -out $(SCER) \
 		-CA $(CACER) -CAkey $(CAKEY)
@@ -60,7 +60,7 @@ $(SCER): $(CACER)
 
 # Create a self-signed CA certificate
 $(CACER): $(CONF)
-	openssl req -x509 -nodes -new -config $(CONF) \
+	openssl req -x509 -noenc -new -config $(CONF) \
 		-section $(CONF_SECT_CA) -days 3650 \
 		-outform $(FORM) -keyout $(CAKEY) -out $(CACER) 
 	# Convert a copy in DER format

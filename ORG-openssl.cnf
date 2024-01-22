@@ -1,8 +1,8 @@
 config_diagnostics		= 1
 default_bits			= 2048
-default_md			= sha256
-UTF8				= yes
-prompt				= no
+default_md				= sha256
+UTF8					= yes
+prompt					= no
 
 [ req_ca ]
 distinguished_name		= dn_ca

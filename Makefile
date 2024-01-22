@@ -78,5 +78,4 @@ clean:
 	       	$(UCER) $(UKEY) $(UPFX) \
 		$(CONF) \
 	       	$(SCER) $(SKEY)
-	rmdir $(CERTS) $(KEYS)
-	rmdir $(DIR)
+	rmdir $(CERTS) $(KEYS) $(DIR)

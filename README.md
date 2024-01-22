@@ -25,7 +25,7 @@
 My organization name is XYZ9 Inc., and my UPN is joost@xyz9.net and my router is egx.xyz9.net, so I do:
 
 	make ORG='"XYZ9 Inc."' UPN=joost@xyz9.net SERVER=egx.xyz9.net
-
+______
 ### Certificate Authority
 
 The section in [config](ORG-CA.cnf) file states that it is a CA and it's intended use to sign other stuff:
@@ -104,6 +104,7 @@ The ${ENV::SERVER} construction takes value of the SERVER environment variable, 
 			95:3B:FB:56:C8:EE:00:04:05:E9:A1:09:CF:8F:07:9B:1B:22:FB:35
 	    Signature Algorithm: sha256WithRSAEncryption
 
+______
 ### User certificate
 
 The below section from the [configuration file](ORG-openssl.cnf) specifies the x509 extensions to be used in the certificate. 
@@ -120,5 +121,4 @@ Note how subjectAltName is populated via otherName with a [User Pricipal Name](h
 See [RFC 3280](https://www.ietf.org/rfc/rfc3280.txt) for the encoding of the subjectAltName.
 See [this](https://learn.microsoft.com/en-us/troubleshoot/windows-server/windows-security/enabling-smart-card-logon-third-party-certification-authorities) dated document for certificate requirements.
 
-
-
+______

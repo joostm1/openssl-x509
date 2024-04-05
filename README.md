@@ -13,18 +13,19 @@
 
 	git clone git@github.com:joostm1/openssl-x509.git
 	cd openssl-x509
-	make ORG='"XYZ9 Inc."' UPN=joost@xyz9.net SERVER=egx.xyz9.net
+	make DIR=XYZ ORG="XYZ9 Inc." UPN=joost@xyz9.net SERVER=egx.xyz9.net
 
 ## Where:
+	DIR		is a directoryname for your organisation, without blanks
 	ORG		is the name of your organisation.
 	UPN		is your User Principal Name.
-	SERVER		is the DNS name of your VPN server
+	SERVER	is the DNS name of your VPN server
 
 ### Here's a run in my world with explanation:
 
 My organization name is XYZ9 Inc., and my UPN is joost@xyz9.net and my router is egx.xyz9.net, so I do:
 
-	make ORG='"XYZ9 Inc."' UPN=joost@xyz9.net SERVER=egx.xyz9.net
+	make DIR=XYZ9 ORG='"XYZ9 Inc."' UPN=joost@xyz9.net SERVER=egx.xyz9.net
 ______
 ### Certificate Authority
 
@@ -35,7 +36,7 @@ The section in [config](ORG-CA.cnf) file states that it is a CA and it's intende
 	keyUsage                = critical, cRLSign, digitalSignature, keyCertSign
 	subjectKeyIdentifier    = hash
 
-	openssl x509 -in "XYZ9 Inc."/certs/cacer.PEM -noout -text
+	openssl x509 -in XYZ9/certs/cacer.PEM -noout -text
 	Certificate:
 	    Data:
 		Version: 3 (0x2)
@@ -72,7 +73,7 @@ The below section from the [configuration file](ORG-openssl.cnf) specifies the x
 
 The ${ENV::SERVER} construction takes value of the SERVER environment variable, egx.xyz9.net in my case as the subjectAltname.
 
-	openssl x509 -in "XYZ9 Inc."/certs/egx.xyz9.net-cer.PEM -noout -text
+	openssl x509 -in XYZ9/certs/egx.xyz9.net-cer.PEM -noout -text
 		Certificate:
 			Data:
 			Version: 3 (0x2)

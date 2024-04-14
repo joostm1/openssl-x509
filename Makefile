@@ -13,7 +13,7 @@ FORMPFX		:= PFX
 FORM		:= $(FORMPEM)
 
 # openssl config file with sections for CA, server and user certificates
-CONF			:= $(DIR)/openssl.cnf
+CONF		:= $(DIR)/openssl.cnf
 CONF_SECT_CA	:= "req_ca"
 CONF_SECT_US	:= "req_user"
 CONF_SECT_SR	:= "req_server"
@@ -67,8 +67,8 @@ $(CACER): $(CONF)
 	openssl x509 -in $(CACER) -inform $(FORM) -out $(CACERDER) -outform $(FORMDER)
 	openssl x509 -in $(CACER) -noout -text
 
-$(CONF):	ORG-openssl.cnf $(DIR)
-	cp ORG-openssl.cnf $(CONF)
+$(CONF):	openssl.cnf $(DIR)
+	cp openssl.cnf $(CONF)
 
 $(DIR):
 	mkdir -p $(KEYS) $(CERTS)

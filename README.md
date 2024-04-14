@@ -13,7 +13,7 @@
 
 	git clone git@github.com:joostm1/openssl-x509.git
 	cd openssl-x509
-	make DIR=XYZ ORG="XYZ9 Inc." UPN=joost@xyz9.net SERVER=egx.xyz9.net
+	make DIR=XYZ9 ORG="XYZ9 Inc." UPN=joost@xyz9.net SERVER=egx.xyz9.net
 
 ## Where:
 	DIR		is a directoryname for your organisation, without blanks

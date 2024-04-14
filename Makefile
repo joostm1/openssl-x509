@@ -1,7 +1,7 @@
 # Makefile
 
 # run this as 
-#		make DIR=XYZ9 ORG="XYZ9 Inc." UPN=joost@xyz9.net SERVER=egx.xyz9.net
+#		make ORG="XYZ9 Inc." UPN=joost@xyz9.net SERVER=egx.xyz9.net
 # 		ensure DIR has no spaces	
 
 # openssl output formats
@@ -13,13 +13,14 @@ FORMPFX		:= PFX
 FORM		:= $(FORMPEM)
 
 # openssl config file with sections for CA, server and user certificates
-CONF		:= $(DIR)/openssl.cnf
+CONF			:= openssl.cnf
 CONF_SECT_CA	:= "req_ca"
 CONF_SECT_US	:= "req_user"
+CONF_SECT_DM	:= "req_domain"
 CONF_SECT_SR	:= "req_server"
 
-KEYS		:= $(DIR)/private
-CERTS		:= $(DIR)/certs
+KEYS		:= private
+CERTS		:= certs
 
 # files for the CA
 CAKEY		:= $(KEYS)/cakey.$(FORM)

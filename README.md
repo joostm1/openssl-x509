@@ -62,7 +62,7 @@ The section in [config](ORG-CA.cnf) file states that it is a CA and it's intende
 Now that we have the CA, we can create a user- and server certificate and sign it with this CA.
 ______
 ### Server certificate
-The below section from the [configuration file](ORG-openssl.cnf) specifies the x509 extensions to be used in the certificate. 
+The below section from the [configuration file](openssl.cnf) specifies the x509 extensions to be used in the certificate. 
 
 	[ server_ext ]
 	basicConstraints = CA:false

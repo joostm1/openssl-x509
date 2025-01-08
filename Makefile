@@ -1,11 +1,16 @@
-# Makefile
-
+# Makefile for creating a CA, a server certificate and a user certificate
+#
 # Yours to configure:
 #-----------------------------------------------------------------------------#
 export ORG				:= XYZ9 Inc.
 export UPN				:= joost@xyz9.net
 export SERVER			:= egx.xyz9.net
+export SAN				:= DNS:$(SERVER)
 export DOMAIN			:= xyz9.net
+#-----------------------------------------------------------------------------#
+# The above can be overridden like this:
+#   make UPN=bob@xyz9.net
+#	make SERVER=opi.xyz9.net SAN=DNS.1:opi.xyz9.net,DNS.2:opi4.xyz9.net,DNS.3:opi6.xyz9.net
 #-----------------------------------------------------------------------------#
 
 # openssl output formats
@@ -60,7 +65,7 @@ $(UPFX): $(UCER)
 		-certfile $(CACER) -name $(UPN) -out $(UPFX) 
 
 # Create and sign the user certificate
-$(USCER): $(CONF) $(CACER)
+$(USCER): $(CACER)
 	openssl req -x509 -noenc -new -config $(CONF) \
 		-section $(CONF_SECT_US) -days 1825 \
 		-outform $(FORM) -keyout $(USKEY) -out $(USCER) \
@@ -81,7 +86,7 @@ $(DMCER): $(CONF) $(CACER)
 # Create and sign the server certificate
 $(SRCERALT): $(SRCER)
 	openssl x509 -in $(SRCER) -inform $(FORM) -out $(SRCERALT) -outform $(ALTFORM)
-$(SRCER): $(CONF) $(CACER)
+$(SRCER): $(CACER)
 	openssl req -x509 -noenc -new -config $(CONF) \
 		-section $(CONF_SECT_SR) -days 3650 \
 		-outform $(FORM) -keyout $(SRKEY) -out $(SRCER) \
@@ -92,7 +97,7 @@ $(SRCER): $(CONF) $(CACER)
 $(CACERALT): $(CACER)
 	openssl x509 -in $(CACER) -inform $(FORM) -out $(CACERALT) -outform $(ALTFORM)
 
-$(CACER): $(CONF)
+$(CACER):
 	openssl req -x509 -noenc -new -config $(CONF) \
 		-section $(CONF_SECT_CA) -days 3650 \
 		-outform $(FORM) -keyout $(CAKEY) -out $(CACER)

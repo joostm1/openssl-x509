@@ -52,12 +52,12 @@ subjectKeyIdentifier	= hash
 basicConstraints		= CA:false
 keyUsage			    = critical, nonRepudiation, digitalSignature, keyEncipherment, keyAgreement
 extendedKeyUsage		= critical, serverAuth, clientAuth, 1.3.6.1.5.5.8.2.2
-subjectAltName			= DNS:${ENV::SERVER}
+subjectAltName			= ${ENV::SAN}
 subjectKeyIdentifier	= hash
 
 [ domain_ext ]
 basicConstraints		= CA:false
 keyUsage			    = critical, nonRepudiation, digitalSignature, keyEncipherment, keyAgreement
 extendedKeyUsage		= critical, serverAuth, 1.3.6.1.5.5.8.2.2
-subjectAltName			= DNS:*.${ENV::DOMAIN}
+subjectAltName			= ${ENV::SAN}
 subjectKeyIdentifier	= hash

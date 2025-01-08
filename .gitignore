@@ -1,3 +1,7 @@
 private/*
 certs/*
 keys/*
+*.pem
+*.crt
+*.crt
+*.key
